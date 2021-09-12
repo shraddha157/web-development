@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="./style/prof.css">
+    </head>
+    <body>
+       
+
+        <% if(susers) { %>
+            <a href='/members/search1/<%=susers.u_name%>' na> <h3><%= susers.u_name %></h3></a>
+              <% } else  { %>
+                 <h5>no user found</h5>
+         <% } %> 
+    </body>

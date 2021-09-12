@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<%- include('partials/header') -%>
+<html>
+<head>
+	
+	<title>Profile</title>
+	<meta charset="utf-8">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style/home_style2.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	
+	<link href="/css/profile.css" rel="stylesheet" type="text/css">
+
+
+
+</head>
+<style>
+	
+	 
+	 .test:after {
+  content: '\2807';
+  font-size: 20px;
+  color: black;
+  }
+  #menu{
+	  padding-top: 16px;
+	  border: none;
+	  color: wheat;
+  }
+	
+</style>
+<body>
+	
+	<div class="main">
+	
+<div class="row">
+	<div class="col-sm-1">	
+	</div>
+	<div class="col-sm-10">
+			<div>
+				
+				<div><img id='cover-img' class='img-rounded' src='  <%= currentUser.user_cover %>' alt='cover'></div>
+				<form action="/home/profile/upload_cover"  method='post' enctype='multipart/form-data'>
+
+				<ul class='nav pull-left' style='position:absolute;top:60px;left:30px;'>
+					<li class='dropdown'>
+						<button class='dropdown-toggle btn btn-default' data-toggle='dropdown' id='update_profile'><b>Change Cover</b></button>
+						<div class='dropdown-menu'>
+							<center>
+							<p>Click <strong>Select Cover</strong> and then click the <br> <strong>Update Cover</strong></p>
+							<label class='btn btn-info'> Select Cover
+							<input type='file' name='u_cover' size='60' >
+							</label><br><br>
+							<button name='submit' class='btn btn-info'>Update Cover</button>
+							</center>
+						</div>
+					</li>
+				</ul>
+				</form>
+			</div>
+			
+			<div id='profile-img' >
+				<img src='<%= currentUser.user_image %>'alt='Profile' class='img-circle' width='180px' height='185px'>
+				<form action="/home/profile/upload_profile" method='post' enctype='multipart/form-data'>
+					<button class='dropdown-toggle btn btn-default' data-toggle='dropdown'  id='update_profile'><b>Select Profile</b></button>
+						<div class='dropdown-menu'>
+					<center>
+						<p>Click <strong>Select Profile</strong> and then click the <br> <strong>Update Profile</strong></p>
+						<label class='btn btn-info'> Select Profile
+						<input type='file' name='u_image' size='60' >
+						</label><br><br><br><br>
+						<button id='button_profile' name='update' class='btn btn-info'>Update Profile</button>
+					</center>
+				</div>
+				</form>
+			</div>
+			<l class="bottom-left"><%= currentUser.f_name %> <%= currentUser.L_name %></l>
+			<br>
+		
+	</div>
+	
+	
+<div id="abt" class="w3-container" > 
+<div class="des">
+	
+<p>	&nbsp 	&nbsp <%= currentUser.status %></p>
+<p>&nbsp 	&nbsp About me: <%= currentUser.discribe_user %></p>
+<p>&nbsp 	&nbsp Relationship status: <%= currentUser.relationship %></p>
+<label  onclick="openForm()" class="btn btn-warning" id="edit">Edit</label>
+<div class="form-popup" id="myForm">
+	<form action="/profil/update_info" method="POST" class="form-container">
+	 
+  
+	  <label for="email"><b>Status</b></label>
+	  <input type="text" placeholder="" name="status" value="<%= currentUser.status %> " >
+  
+	  <label for="psw"><b>About me</b></label>
+	  <input type="text" name="abtme" value="<%= currentUser.discribe_user %>"  >
+
+	  <label for="psw"><b>Relationship Status</b></label>
+	  <select for="psw" name="relation" value="<%= currentUser.relationship %>"">
+		<option disabled>Relationship Status</option>
+		<option>None</option>
+		<option>Single</option>
+		<option>married</option> 
+		<option>committed</option>
+	</select>
+  <br>
+	  <button type="submit"onclick="closeForm()" class="btn">Save Changes</button>
+	  <buttontype="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+	</form>
+  </div>
+  
+  <script>
+  function openForm() {
+	document.getElementById("myForm").style.display = "block";
+  }
+  
+  function closeForm() {
+	document.getElementById("myForm").style.display = "none";
+  }
+  </script>
+
+</div>
+</div>
+<br>
+<br>
+	
+	<div class="row">
+		<div class="col-sm-1">	
+		</div>
+		<div class="col-sm-12">
+				<div>
+		
+			<center>
+			<form action="/home/profile/upload_image" method="post" id="f" enctype="multipart/form-data">
+			<textarea class="form-control" id="content" rows="4" name="content" placeholder="What's in your mind?"></textarea><br>
+			<label class="btn btn-warning" id="upload_image_button">Select Image
+			<input type="file" class="custom-file-input" name="upload_image" size="30">
+			</label>
+			<button id="btn-post" class="btn btn-success" name="sub">Post</button>
+			</form>
+			</center>
+		</div>
+		</div>
+		
+
+		
+
+
+		
+	</div>
+	<div class="l">
+	<div class="row">
+		<div class="col-sm-8">	
+		</div>
+		<div class="col-sm-10">
+	<% currentpost.forEach(post => { %>
+	<br>
+	<br>
+	<% if( post.upload_image!= "") { %>
+		
+
+		<div class="l1">
+		<div class="header1">
+			<a href="/home/profile"><img src='<%= currentUser.user_image %>'alt='Profile' class='img-circle' width='50px' height='35px'></a>
+			<a href="/home/profile"  ><div class="un"><%= currentUser.u_name %> </div></a>
+			<div class="header1-right">
+				
+				<button id="menu">
+					<div class="test"></div>
+				</button>
+				
+				 
+			
+			</div>
+		  </div>
+		  </div>
+		
+		  
+		
+			
+		
+		 
+		 
+		  
+		  
+	<center>
+	<div><img id='post-img'  src='<%= post.upload_image %>' alt='cover' width="650px" height="565px"></div>
+	</center>
+	<br>
+	<div class="like">
+		
+	<span id = <%= post._id %>><i class="fa fa-heart-o"   onclick="myFunction(this)" aria-hidden="true" ></i> </span>
+	<!-- Used CDN for Font Awesome and Jquery. -->
+		<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+	
+	  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+	<script src='https://use.fontawesome.com/0206006232.js'></script>
+	  
+		  <script id="rendered-js" >
+	// It checks to see if the span id #heart has "liked" class, if not it run the else statement and adds the "liked" class, on a 2nd click it see that it has the "liked" class so it replaces the ihherHTML and removes class, on 3rd click it runs the else statement again cause there is no "liked" class(remomved on 2nd click).
+	
+	$(document).ready(function () {
+	  $("#<%= post._id %>").click(function () {
+		if ($("#<%= post._id %>").hasClass("liked")) {
+		  $("#<%= post._id %>").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+		  $("#<%= post._id %>").removeClass("liked");
+		  
+		} else {
+		  $("#<%= post._id %>").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+		  $("#<%= post._id %>").addClass("liked");
+		 
+		}
+	  });
+	});
+		</script>
+		
+		
+		
+	<p><b><%= uname %> </b><%= post.post_content %></p>
+	<p class="showdate"><%= post.post_date %></p>
+	</div>
+	
+	<br>
+	<br>
+	<hr size="" width="70%" color="grey">
+	<% } else {%>
+		<br>
+	    <div class="like">
+		<p><%= post.post_content %></p>
+		
+	<p><span id = <%= post._id %>><i class="fa fa-heart-o"   onclick="myFunction(this)" aria-hidden="true" ></i> </span></p>
+		<div id="#<%= post._id %>"></div>
+	<!-- Used CDN for Font Awesome and Jquery. -->
+		<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+	
+	  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+	<script src='https://use.fontawesome.com/0206006232.js'></script>
+	  
+		  <script id="rendered-js" >
+	// It checks to see if the span id #heart has "liked" class, if not it run the else statement and adds the "liked" class, on a 2nd click it see that it has the "liked" class so it replaces the ihherHTML and removes class, on 3rd click it runs the else statement again cause there is no "liked" class(remomved on 2nd click).
+	
+	$(document).ready(function () {
+	  $("#<%= post._id %>").click(function () {
+		if ($("#<%= post._id %>").hasClass("liked")) {
+		  $("#<%= post._id %>").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+		  $("#<%= post._id %>").removeClass("liked");
+		 } else {
+		  $("#<%= post._id %>").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+		  $("#<%= post._id %>").addClass("liked");
+		 }
+	  });
+	});
+	//# sourceURL=pen.js
+		</script>
+		<p><b><%= uname %></b></p>
+	<br>
+	<p class="showdate"><%= post.post_date %></p>
+	</div>
+	<br>
+	<br>
+	<hr size="" width="70%" color="grey">
+
+	<% } %>
+	
+	
+	<% }) %>
+	<br>
+	</div>
+	</div>
+    </div>
+		
+	
+</body>
+</html>
